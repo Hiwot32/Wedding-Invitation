@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from ForeverLove.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home_page, name='home')
 ]
