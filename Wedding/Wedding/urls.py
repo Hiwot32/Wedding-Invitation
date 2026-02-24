@@ -20,5 +20,8 @@ from ForeverLove.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_page, name='home')
+    path('', home_page, name='home'),
+    path('about/', about_page, name='about'),
+    path('story/', story_page, name='story'),
+    path('gallery/', galler_page, name='gallery')
 ]
