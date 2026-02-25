@@ -12,46 +12,102 @@
             padding:0;
             margin:0;
         }
-        .her{
-            background-image:url("https://www.madebydesignesia.com/themes/lovus/images/background/2.jpg");
+        .lists{
+        gap:70px;
+        }
+                a{
+            color:white;
+            text-decoration: none;
+            cursor:pointer;
+        }
+        a:hover{
+            color:rgb(209,164,122);
+        }
+        .outerSection{
+                        background-image:url("https://www.madebydesignesia.com/themes/lovus/images/background/1.jpg");
             background-size:cover;
+
+        }
+        .her{
+
             padding:200px;
         }
         .orange{
             color:rgb(209,164,122);
-            font-size:70px;
+            {% comment %} font-size:70px; {% endcomment %}
         }
         .him{
             background-image:url("https://www.madebydesignesia.com/themes/lovus/images/background/1.jpg");
             background-size:cover;
             padding:200px;
         }
+                
+        .footer{
+            background-color:rgb(98,101,112)
+        }
+        .footer-div{
+            background-color:rgb(89,92,102)
+        }
     </style>
 </head>
 
 <body>
     <section>
+    
+    <section class="outerSection" >
+    <header class="p-5">
+        <section class="d-flex justify-content-between header">
+            <div>
+                <h2 class="orange">ForeverLove</h2>
+            </div>
+            <div>
+                <ul class="lists list-unstyled d-flex text-white fw-bold">
+                    <a href="/">Home</a>
+                    <a href={% url 'about' %}>About</a>
+                    <a href={% url 'story' %}>Story</a>
+                    <a href={% url 'gallery' %}>Gallery</i>
+                    <a href={% url 'Info' %}>Weeding<br /> <span class="orange">Information</span></a>
+                </ul>
+            </div>
+        </section>
+       
+    </header>
         <div class="her text-center">
-            <p class="fs-1 text-white">Sara <br /><span class="orange">Happy Bride</span></p>
+            <p class="fs-1 text-white">{{weddings}} <br /><span class="orange">Happy Bride</span></p>
         </div>
+        </section>
         <div class="py-5">
-            <p class="w-50 fs-5 mx-auto text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="w-50 fs-5 mx-auto text-center">{{weddings.herStory}}</p>
         </div>
+    
 
     </section>
+
+
+
     <section>
 
     <section>
          <div class="him text-center">
-            <p class="fs-1 text-white">Abrham <br /><span class="orange">Happy Groom</span></p>
+            <p class="fs-1 text-white">{{weddings.groom_name}} <br /><span class="orange">Happy Groom</span></p>
         </div>
         <div class="py-5">
-            <p class="w-50 fs-5 mx-auto text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="w-50 fs-5 mx-auto text-center">{{weddings.hisStory}}</p>
         </div>
     </section>
 
 
     </section>
+
+<footer class=" text-white footer text-center">
+    <div class="p-5">
+    <p class="py-4 fs-3">{{weddings.groom_name}} <span class="orange">&</span> {{weddings.bride_name}}</P>
+    </div>
+    <div class="text-center footer-div py-3">
+        <p>&copy; Copyright 2026</P>
+    </div>
+</footer>
+    
 
 
 

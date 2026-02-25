@@ -23,7 +23,7 @@
       <!-- Card -->
       <div class="card shadow-lg border-0" style="border-radius: 20px">
         <div class="card-body p-5">
-          <form method="POST" enctype="multipart/form-data">
+          <form method="POST" action={% url 'Info' %} enctype="multipart/form-data">
             {% csrf_token %}
 
             <!-- ================= BASIC INFO ================= -->
@@ -363,37 +363,31 @@
               </div>
             </div>
 
-            <hr class="my-5" />
 
-            <h4
-              class="mb-4 text-center"
-              style="color: #c2185b; font-weight: bold"
-            >
-              🎉 Add a Guest
-            </h4>
+<hr class="my-5" />
 
-            <div
-              class="card shadow-sm p-4"
-              style="
-                border-radius: 20px;
-                background-color: #fff0f5;
-                max-width: 600px;
-                margin: auto;
-              "
-            >
-              <div class="mb-3">
-                <label class="form-label fw-bold">Guest Name</label>
-                <input
-                  type="text"
-                  name="guest_name"
-                  class="form-control"
-                  placeholder="Enter guest name"
-                  style="border-radius: 10px"
-                  value="{{ guest.guest_name|default:'' }}"
-                  required
-                />
-              </div>
-            </div>
+<h4 class="mb-3 text-center" style="color: #c2185b;">
+  🎉 Guest List
+</h4>
+
+<div class="mb-4" style="max-width:600px; margin:auto;">
+  
+  <label class="form-label fw-bold">
+    Guest Names (one per line)
+  </label>
+
+  <textarea
+    name="guest_list"
+    class="form-control"
+    rows="5"
+    placeholder="Example:
+Hiwot Demissie
+Abebe Bekele
+Marta Tesfaye"
+    required
+  ></textarea>
+
+</div>
 
             <!-- Submit Button -->
             <div class="text-center">
@@ -406,6 +400,7 @@
                   border-radius: 30px;
                   font-weight: bold;
                 "
+                onclick=
               >
                 {% if wedding %} 💾 Update Wedding {% else %} 💕 Create Wedding
                 {% endif %}

@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from ForeverLove.views import *
 
 urlpatterns = [
@@ -24,5 +26,10 @@ urlpatterns = [
     path('about/', about_page, name='about'),
     path('story/', story_page, name='story'),
     path('gallery/', galler_page, name='gallery'),
-    path('couplesInfo/', couples_info, name='Info')
+    path('couplesInfo/', couples_info, name='Info'), 
+    path('rsvp/<int:wedding_id>/', rsvp_page, name='rsvp')
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
