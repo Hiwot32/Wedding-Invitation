@@ -23,5 +23,6 @@ urlpatterns = [
     path('', home_page, name='home'),
     path('about/', about_page, name='about'),
     path('story/', story_page, name='story'),
-    path('gallery/', galler_page, name='gallery')
+    path('gallery/', galler_page, name='gallery'),
+    path('couplesInfo/', couples_info, name='Info')
 ]

@@ -17,7 +17,9 @@ class Wedding(models.Model):
     hisStory=models.TextField()
     how_we_met=models.TextField()
     first_date=models.TextField()
+    proposal=models.TextField()
     engagement=models.TextField()
+    marriage=models.TextField()
 
     def __str__(self):
         return self.bride_name
@@ -27,18 +29,20 @@ class Wedding(models.Model):
 # Wedding Images (cover, about, gallery)
 class Image(models.Model):
     wedding = models.OneToOneField(Wedding, on_delete=models.CASCADE)
-    CoverImage = models.ImageField(upload_to='images/')
-    herImage = models.ImageField(upload_to='images/')
-    hisImage = models.ImageField(upload_to='images/')
-    meet=models.ImageField(upload_to='images/')
-    engaement=models.ImageField(upload_to='images/')
-    first_date=models.ImageField(upload_to='images/')
-    gallery1 = models.ImageField(upload_to='images/')
-    gallery2 = models.ImageField(upload_to='images/')
-    gallery3 = models.ImageField(upload_to='images/')
-    gallery4 = models.ImageField(upload_to='images/')
-    gallery5 = models.ImageField(upload_to='images/')
-    gallery6 = models.ImageField(upload_to='images/')
+    CoverImage = models.ImageField(upload_to='images/', null=True, blank=True)
+    herImage = models.ImageField(upload_to='images/', null=True, blank=True)
+    hisImage = models.ImageField(upload_to='images/', null=True, blank=True)
+    meet=models.ImageField(upload_to='images/', null=True, blank=True)
+    engaement=models.ImageField(upload_to='images/', null=True, blank=True)
+    first_date=models.ImageField(upload_to='images/', null=True, blank=True)
+    proposal=models.ImageField(upload_to='images/', null=True, blank=True)
+    marriage=models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery1 = models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery2 = models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery3 = models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery4 = models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery5 = models.ImageField(upload_to='images/', null=True, blank=True)
+    gallery6 = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.wedding
