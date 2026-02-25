@@ -2,13 +2,10 @@ from django.shortcuts import render,redirect
 from .models import *
 
 # Create your views here.
-w = Wedding.objects.last()
-i = Image.objects.get(wedding=w)
-print(i.herImage.path) 
 
 def home_page(request):
-    weddings = Wedding.objects.last()           # get the latest wedding
-    img_obj = Image.objects.filter(wedding=weddings).first()  # get images for that wedding
+    weddings = Wedding.objects.last()         
+    img_obj = Image.objects.filter(wedding=weddings).first()  
     context = {
         'weddings': weddings,
         'img_obj': img_obj
@@ -21,10 +18,14 @@ def about_page(request):
     return render(request, 'aboutPage.html', {'weddings':weddings, 'img':img})
 
 def story_page(request):
-    return render(request, 'story.html')
+    weddings = Wedding.objects.last() 
+    img = Image.objects.filter(wedding=weddings).first()
+    return render(request, 'story.html', {'weddings':weddings, 'img':img})
 
 def galler_page(request):
-    return render(request, 'gallery.html')
+    weddings = Wedding.objects.last() 
+    img = Image.objects.filter(wedding=weddings).first()    
+    return render(request, 'gallery.html', {'weddings':weddings, 'img':img})
 
 def couples_info(request):
     if request.method=="POST":
@@ -105,15 +106,52 @@ def rsvp_page(request, wedding_id):
         attendance = request.POST.get("attendance")
 
         guest = Guest.objects.get(id=guest_id)
+        attending_bool = True if attendance == 'yes' else False
+
+        try:
+            number = int(number)
+        except (TypeError, ValueError):
+            number = 1  # default if empty or invalid
 
         # Example: Save RSVP
         RSVP.objects.create(
+            wedding=wedding, 
             guest=guest,
-            number_of_guests=number,
-            attendance=attendance
+            numberofGuste=number,
+            attending=attending_bool
         )
+
+        return redirect('home')
 
     return render(request, "rsvp.html", {
         "wedding": wedding,
         "guests": guests
     })
+
+def edit_wedding(request):
+    wedding = Wedding.objects.last()
+
+    if not wedding:
+        return redirect('Info')
+
+    if request.method == "POST":
+        wedding.bride_name = request.POST.get('bride_name')
+        wedding.groom_name = request.POST.get('groom_name')
+        wedding.wedding_date = request.POST.get('wedding_date')
+        wedding.location = request.POST.get('location')
+        wedding.story = request.POST.get('story')
+        wedding.herStory = request.POST.get('herStory')
+        wedding.hisStory = request.POST.get('hisStory')
+        wedding.how_we_met = request.POST.get('how_we_met')
+        wedding.first_date = request.POST.get('first_date')
+        wedding.proposal = request.POST.get('proposal')
+        wedding.engagement = request.POST.get('engagement')
+        wedding.marriage = request.POST.get('marriage')
+
+        wedding.save()
+        return redirect('Info')
+
+    context = {
+        'wedding': wedding
+    }
+    return render(request, 'update.html', context)

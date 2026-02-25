@@ -27,7 +27,8 @@ urlpatterns = [
     path('story/', story_page, name='story'),
     path('gallery/', galler_page, name='gallery'),
     path('couplesInfo/', couples_info, name='Info'), 
-    path('rsvp/<int:wedding_id>/', rsvp_page, name='rsvp')
+    path('rsvp/<int:wedding_id>/', rsvp_page, name='rsvp'),
+    path('edit/', edit_wedding, name='edit_wedding'),
 ]
 
 
