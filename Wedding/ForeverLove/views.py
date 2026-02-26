@@ -12,7 +12,7 @@ def register(request):
         if form.is_valid():
             user = form.save()  # save new user
             login(request, user)  # log the user in immediately
-            return redirect('Info')  # redirect to couples info or home
+            return redirect('home')  # redirect to couples info or home
     else:
         form = UserCreationForm()
     return render(request, 'registration.html', {'form': form})
@@ -20,21 +20,36 @@ def register(request):
 def home_page(request):
     weddings=Wedding.objects.last()
     img_obj=Image.objects.filter(wedding=weddings).last()
-    context = {
-        'weddings': weddings, 
-        'img_obj': img_obj 
+    if not weddings:
+        weddings={
+            "groom_name":"Abrham",
+            "bride_name":"Sara"
+        }
+    if not img_obj:
+        img_obj={
+            "herImg":"https://www.madebydesignesia.com/themes/lovus/images/misc/1.jpg",
+            "hisImg":"https://www.madebydesignesia.com/themes/lovus/images/misc/2.jpg"
+        }
+    context={
+        "weddings":weddings,
+        "img_obj":img_obj
     }
-    
     return render(request, 'homePage.html', context)
 
 def about_page(request):
     weddings = Wedding.objects.last() 
-    img = Image.objects.filter(wedding=weddings).first()
+    img = Image.objects.filter(wedding=weddings).last()
+    if not weddings:
+        weddings={
+            "groom_name":"Abrham",
+            "bride_name":"Sara",
+
+        }
     return render(request, 'aboutPage.html', {'weddings':weddings, 'img':img})
 
 def story_page(request):
     weddings = Wedding.objects.last() 
-    img = Image.objects.filter(wedding=weddings).first()
+    img = Image.objects.filter(wedding=weddings).last()
     return render(request, 'story.html', {'weddings':weddings, 'img':img})
 
 def galler_page(request):
@@ -80,27 +95,24 @@ def couples_info(request):
             dateOfProposal=date_of_proposal,
             dateOfEngagement=date_of_engagement
         )
-             # Create Image object linked to this wedding
-        img_obj = Image(wedding=wedding)
-
-# Assign each uploaded file individually
-   
-        img_obj.herImage = request.FILES.get("herImage")
-        img_obj.hisImage = request.FILES.get("hisImage")
-        img_obj.meet = request.FILES.get("meet")
-        img_obj.engagement = request.FILES.get("engaement")
-        img_obj.first_date = request.FILES.get("first_date")
-        img_obj.proposal = request.FILES.get("proposal")
-        img_obj.marriage = request.FILES.get("marriage")
-        img_obj.gallery1 = request.FILES.get("gallery1")
-        img_obj.gallery2 = request.FILES.get("gallery2")
-        img_obj.gallery3 = request.FILES.get("gallery3")
-        img_obj.gallery4 = request.FILES.get("gallery4")
-        img_obj.gallery5 = request.FILES.get("gallery5")
-        img_obj.gallery6 = request.FILES.get("gallery6")
-
-# Save to database
-        img_obj.save()
+        
+        Image.objects.create(
+            wedding=wedding,
+            herImage=request.FILES.get("herImage"),
+            hisImage=request.FILES.get("hisImage"),
+            meet=request.FILES.get("meet"),
+            engagement=request.FILES.get("engagement"),
+            first_date=request.FILES.get("first_date"),
+            proposal=request.FILES.get("proposal"),
+            marriage=request.FILES.get("marriage"),
+            gallery1=request.FILES.get("gallery1"),
+            gallery2=request.FILES.get("gallery2"),
+            gallery3=request.FILES.get("gallery3"),
+            gallery4=request.FILES.get("gallery4"),
+            gallery5=request.FILES.get("gallery5"),
+            gallery6=request.FILES.get("gallery6"),
+        )
+    
 
         guest_text = request.POST.get("guest_list")
 
@@ -126,23 +138,22 @@ def rsvp_page(request, wedding_id):
 
     if request.method == "POST":
         guest_id = request.POST.get("guest_id")
-        number = request.POST.get("number_of_guests")
+        number = request.POST.get("num_guests")
         attendance = request.POST.get("attendance")
+        comments=request.POST.get("comments")
 
         guest = Guest.objects.get(id=guest_id)
         attending_bool = True if attendance == 'yes' else False
 
-        try:
-            number = int(number)
-        except (TypeError, ValueError):
-            number = 1  # default if empty or invalid
+        number = int(number)
+  
 
-        # Example: Save RSVP
         RSVP.objects.create(
             wedding=wedding, 
             guest=guest,
-            numberofGuste=number,
-            attending=attending_bool
+            number_of_guests=number,
+            attending=attending_bool,
+            comments=comments
         )
 
         return redirect('home')
@@ -154,9 +165,6 @@ def rsvp_page(request, wedding_id):
 
 def edit_wedding(request):
     wedding = Wedding.objects.last()
-
-    if not wedding:
-        return redirect('Info')
 
     if request.method == "POST":
         wedding.bride_name = request.POST.get('bride_name')
@@ -184,6 +192,5 @@ def edit_wedding(request):
     }
 
     return redirect('home')
-
 
     return render(request, 'update.html', context)

@@ -19,12 +19,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 from ForeverLove.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html', next_page='home' ), name='login'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('register/', register, name='register'),
     path('', home_page, name='home'),
     path('about/', about_page, name='about'),

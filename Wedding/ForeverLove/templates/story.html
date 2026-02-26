@@ -78,8 +78,7 @@
                     <a href="/">Home</a>
                     <a href={% url 'about' %}>About</a>
                     <a href={% url 'story' %}>Story</a>
-                    <a href={% url 'gallery' %}>Gallery</i>
-                    <a href={% url 'Info' %}>Weeding<br /> <span class="orange">Information</span></a>
+                    <a href={% url 'gallery' %}>Gallery</a>
                 </ul>
             </div>
         </section>
@@ -104,7 +103,7 @@
                 </div>
                 <div class="divs">
                     <div class="">
-                        <img src="{{img.proposal}}" style="width:500px" class="rounded-3 pb-4"/>
+                        <img src="{{img.proposal.url}}" style="width:500px" class="rounded-3 pb-4"/>
                     </div>
                     <div class="">
                         <p class="">{{weddings.dateOfProposal}}</p>
@@ -114,12 +113,12 @@
                 </div>
                 <div class="divs">
                     <div class="">
-                        <img src="https://www.madebydesignesia.com/themes/lovus/images/story/5.jpg" style="width:500px" class="rounded-3 pb-4"/>
+                        <img src="{{img.marriage.url}}" style="width:500px" class="rounded-3 pb-4"/>
                     </div>
                     <div class="">
-                        <p class="">1 July 2024</p>
+                        <p class="">{{weddings.wedding_date}}</p>
                         <h4 class="pb-3">Getting Married</h4>
-                        <p class="w-75">Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo.</p>
+                        <p class="w-75">{{weddings.marriage}}</p>
                     </div>
                 </div>
             </div>
