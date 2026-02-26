@@ -1,15 +1,30 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from .models import *
 
 # Create your views here.
 
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # save new user
+            login(request, user)  # log the user in immediately
+            return redirect('Info')  # redirect to couples info or home
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration.html', {'form': form})
+
 def home_page(request):
-    weddings = Wedding.objects.last()         
-    img_obj = Image.objects.filter(wedding=weddings).first()  
+    weddings=Wedding.objects.last()
+    img_obj=Image.objects.filter(wedding=weddings).last()
     context = {
-        'weddings': weddings,
-        'img_obj': img_obj
+        'weddings': weddings, 
+        'img_obj': img_obj 
     }
+    
     return render(request, 'homePage.html', context)
 
 def about_page(request):
@@ -27,6 +42,7 @@ def galler_page(request):
     img = Image.objects.filter(wedding=weddings).first()    
     return render(request, 'gallery.html', {'weddings':weddings, 'img':img})
 
+@login_required
 def couples_info(request):
     if request.method=="POST":
         bride_name = request.POST.get("bride_name")
@@ -37,9 +53,13 @@ def couples_info(request):
         herStory = request.POST.get("herStory")
         hisStory = request.POST.get("hisStory")
         how_we_met = request.POST.get("how_we_met")
+        date_of_meet=request.POST.get("dateOfMeet")
         first_date = request.POST.get("first_date")
+        date_of_fdate=request.POST.get("dateOfDate")
         proposal = request.POST.get("proposal")
+        date_of_proposal=request.POST.get("dateOfProposal")
         engagement = request.POST.get("engagement")
+        date_of_engagement=request.POST.get("dateOfEngagement")
         marriage = request.POST.get("marriage")
 
         wedding=Wedding.objects.create(
@@ -54,17 +74,21 @@ def couples_info(request):
             first_date=first_date,
             proposal=proposal,
             engagement=engagement,
-            marriage=marriage
+            marriage=marriage,
+            dateOfMeet=date_of_meet,
+            dateOfDate=date_of_fdate,
+            dateOfProposal=date_of_proposal,
+            dateOfEngagement=date_of_engagement
         )
              # Create Image object linked to this wedding
         img_obj = Image(wedding=wedding)
 
 # Assign each uploaded file individually
-        img_obj.CoverImage = request.FILES.get("CoverImage")
+   
         img_obj.herImage = request.FILES.get("herImage")
         img_obj.hisImage = request.FILES.get("hisImage")
         img_obj.meet = request.FILES.get("meet")
-        img_obj.engaement = request.FILES.get("engaement")
+        img_obj.engagement = request.FILES.get("engaement")
         img_obj.first_date = request.FILES.get("first_date")
         img_obj.proposal = request.FILES.get("proposal")
         img_obj.marriage = request.FILES.get("marriage")
@@ -147,6 +171,10 @@ def edit_wedding(request):
         wedding.proposal = request.POST.get('proposal')
         wedding.engagement = request.POST.get('engagement')
         wedding.marriage = request.POST.get('marriage')
+        wedding.dateOfMeet=request.POST.get('dateOfMeet')
+        wedding.dateOfDate=request.POST.get('dateOfDate')
+        wedding.dateOfProposal=request.POST.get('dateOfProposal')
+        wedding.dateOfEngagement=request.POST.get('dateOfEngagement')
 
         wedding.save()
         return redirect('Info')
@@ -154,4 +182,8 @@ def edit_wedding(request):
     context = {
         'wedding': wedding
     }
+
+    return redirect('home')
+
+
     return render(request, 'update.html', context)

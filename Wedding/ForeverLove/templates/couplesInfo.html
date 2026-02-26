@@ -10,9 +10,11 @@
       rel="stylesheet"
     />
   </head>
+
   <body style="background: linear-gradient(to right, #f8f9fa, #ffe6f0)">
     <div class="container py-5">
-      <!-- Page Title -->
+
+      <!-- Title -->
       <div class="text-center mb-5">
         <h1 style="font-family: cursive; color: #c2185b">
           💕 Couples Information
@@ -20,10 +22,10 @@
         <p class="text-muted">Create or Update Your Wedding Story</p>
       </div>
 
-      <!-- Card -->
       <div class="card shadow-lg border-0" style="border-radius: 20px">
         <div class="card-body p-5">
-          <form method="POST" action={% url 'Info' %} enctype="multipart/form-data">
+
+          <form method="POST" action="{% url 'Info' %}" enctype="multipart/form-data">
             {% csrf_token %}
 
             <!-- ================= BASIC INFO ================= -->
@@ -32,414 +34,203 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Bride Name</label>
-                <input
-                  type="text"
-                  name="bride_name"
-                  class="form-control"
-                  style="border-radius: 10px"
-                  value="{{ wedding.bride_name|default:'' }}"
-                  required
-                />
+                <input type="text" name="bride_name" class="form-control"
+                  value="{{ wedding.bride_name|default:'' }}" required />
               </div>
 
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Groom Name</label>
-                <input
-                  type="text"
-                  name="groom_name"
-                  class="form-control"
-                  style="border-radius: 10px"
-                  value="{{ wedding.groom_name|default:'' }}"
-                  required
-                />
+                <input type="text" name="groom_name" class="form-control"
+                  value="{{ wedding.groom_name|default:'' }}" required />
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Wedding Date</label>
-                <input
-                  type="date"
-                  name="wedding_date"
-                  class="form-control"
-                  style="border-radius: 10px"
-                  value="{{ wedding.wedding_date|date:'Y-m-d' }}"
-                />
+                <input type="date" name="wedding_date" class="form-control"
+                  value="{{ wedding.wedding_date|date:'Y-m-d' }}" />
               </div>
 
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Location</label>
-                <input
-                  type="text"
-                  name="location"
-                  class="form-control"
-                  style="border-radius: 10px"
-                  value="{{ wedding.location|default:'' }}"
-                />
+                <input type="text" name="location" class="form-control"
+                  value="{{ wedding.location|default:'' }}" />
               </div>
             </div>
 
             <hr class="my-4" />
 
             <!-- ================= STORY SECTION ================= -->
-            <h4 class="mb-4" style="color: #c2185b">Our Love Story</h4>
-
-            <div class="mb-3">
-              <label class="form-label fw-bold">Our Story</label>
-              <textarea
-                name="story"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.story|default:'' }}</textarea
-              >
-            </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">Her Story</label>
-              <textarea
-                name="herStory"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.herStory|default:'' }}</textarea
-              >
+              <textarea name="herStory" class="form-control" rows="3">
+{{ wedding.herStory|default:'' }}</textarea>
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">His Story</label>
-              <textarea
-                name="hisStory"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.hisStory|default:'' }}</textarea
-              >
+              <textarea name="hisStory" class="form-control" rows="3">
+{{ wedding.hisStory|default:'' }}</textarea>
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">How We Met</label>
-              <textarea
-                name="how_we_met"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.how_we_met|default:'' }}</textarea
-              >
+              <textarea name="how_we_met" class="form-control" rows="3">
+{{ wedding.how_we_met|default:'' }}</textarea>
+            </div>
+
+            <!-- Date of First Meet -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Date of First Meet</label>
+              <input type="date" name="dateOfMeet" class="form-control"
+                value="{{ wedding.dateOfMeet|date:'Y-m-d' }}" />
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">First Date</label>
-              <textarea
-                name="first_date"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.first_date|default:'' }}</textarea
-              >
+              <textarea name="first_date" class="form-control" rows="3">
+{{ wedding.first_date|default:'' }}</textarea>
+            </div>
+
+            <!-- Date of First Date -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Date of First Date</label>
+              <input type="date" name="dateOfDate" class="form-control"
+                value="{{ wedding.dateOfDate|date:'Y-m-d' }}" />
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">Proposal</label>
-              <textarea
-                name="proposal"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.proposal|default:'' }}</textarea
-              >
+              <textarea name="proposal" class="form-control" rows="3">
+{{ wedding.proposal|default:'' }}</textarea>
+            </div>
+
+            <!-- Date of Proposal -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Date of Proposal</label>
+              <input type="date" name="dateOfProposal" class="form-control"
+                value="{{ wedding.dateOfProposal|date:'Y-m-d' }}" />
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">Engagement</label>
-              <textarea
-                name="engagement"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.engagement|default:'' }}</textarea
-              >
+              <textarea name="engagement" class="form-control" rows="3">
+{{ wedding.engagement|default:'' }}</textarea>
+            </div>
+
+            <!-- Date of Engagement -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Date of Engagement</label>
+              <input type="date" name="dateOfEngagement" class="form-control"
+                value="{{ wedding.dateOfEngagement|date:'Y-m-d' }}" />
             </div>
 
             <div class="mb-3">
               <label class="form-label fw-bold">Marriage</label>
-              <textarea
-                name="marriage"
-                class="form-control"
-                rows="3"
-                style="border-radius: 10px"
-              >
-{{ wedding.marriage|default:'' }}</textarea
-              >
+              <textarea name="marriage" class="form-control" rows="3">
+{{ wedding.marriage|default:'' }}</textarea>
             </div>
 
-            <hr class="my-4" />
-
-            <!-- ================= IMAGES ================= -->
             <hr class="my-5" />
 
-            <h4
-              class="mb-4 text-center"
-              style="color: #c2185b; font-weight: bold"
-            >
+            <!-- ================= IMAGES ================= -->
+            <h4 class="mb-4 text-center" style="color:#c2185b;font-weight:bold;">
               📸 Upload Wedding Images
             </h4>
 
-            <div class="row g-4">
-              <!-- Cover Image -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Cover Image</label>
-                  <input
-                    type="file"
-                    name="CoverImage"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">Her Image</label>
+                <input type="file" name="herImage" class="form-control" />
               </div>
 
-              <!-- Her Image -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Her Image</label>
-                  <input
-                    type="file"
-                    name="herImage"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">His Image</label>
+                <input type="file" name="hisImage" class="form-control" />
               </div>
 
-              <!-- His Image -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">His Image</label>
-                  <input
-                    type="file"
-                    name="hisImage"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">Meet Image</label>
+                <input type="file" name="meet" class="form-control" />
               </div>
 
-              <!-- Meet -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Meet Image</label>
-                  <input
-                    type="file"
-                    name="meet"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">Engagement Image</label>
+                <input type="file" name="engaement" class="form-control" />
               </div>
 
-              <!-- Engagement -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Engagement Image</label>
-                  <input
-                    type="file"
-                    name="engaement"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">First Date Image</label>
+                <input type="file" name="first_date" class="form-control" />
               </div>
 
-              <!-- First Date -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">First Date Image</label>
-                  <input
-                    type="file"
-                    name="first_date"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">Proposal Image</label>
+                <input type="file" name="proposal" class="form-control" />
               </div>
 
-              <!-- Proposal -->
               <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Proposal Image</label>
-                  <input
-                    type="file"
-                    name="proposal"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
-              </div>
-
-              <!-- Marriage -->
-              <div class="col-md-4">
-                <div class="card shadow-sm p-3" style="border-radius: 15px">
-                  <label class="form-label fw-bold">Marriage Image</label>
-                  <input
-                    type="file"
-                    name="marriage"
-                    class="form-control"
-                    style="border-radius: 10px"
-                  />
-                </div>
+                <label class="fw-bold">Marriage Image</label>
+                <input type="file" name="marriage" class="form-control" />
               </div>
             </div>
 
             <hr class="my-5" />
 
-            <h4
-              class="mb-4 text-center"
-              style="color: #c2185b; font-weight: bold"
-            >
+            <!-- ================= GALLERY ================= -->
+            <h4 class="mb-4 text-center" style="color:#c2185b;font-weight:bold;">
               🖼 Gallery Images
             </h4>
 
             <div class="row g-4">
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery1"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery2"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery3"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery4"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery5"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <input
-                  type="file"
-                  name="gallery6"
-                  class="form-control"
-                  style="border-radius: 10px"
-                />
-              </div>
+              <div class="col-md-4"><input type="file" name="gallery1" class="form-control" /></div>
+              <div class="col-md-4"><input type="file" name="gallery2" class="form-control" /></div>
+              <div class="col-md-4"><input type="file" name="gallery3" class="form-control" /></div>
+              <div class="col-md-4"><input type="file" name="gallery4" class="form-control" /></div>
+              <div class="col-md-4"><input type="file" name="gallery5" class="form-control" /></div>
+              <div class="col-md-4"><input type="file" name="gallery6" class="form-control" /></div>
             </div>
 
+            <hr class="my-5" />
 
-<hr class="my-5" />
+            <!-- ================= GUEST LIST ================= -->
+            <h4 class="mb-3 text-center" style="color:#c2185b;">
+              🎉 Guest List
+            </h4>
 
-<h4 class="mb-3 text-center" style="color: #c2185b;">
-  🎉 Guest List
-</h4>
+            <div style="max-width:600px;margin:auto;">
+              <label class="fw-bold">Guest Names (one per line)</label>
+              <textarea name="guest_list" class="form-control" rows="5" required></textarea>
+            </div>
 
-<div class="mb-4" style="max-width:600px; margin:auto;">
-  
-  <label class="form-label fw-bold">
-    Guest Names (one per line)
-  </label>
+            <hr class="my-5" />
 
-  <textarea
-    name="guest_list"
-    class="form-control"
-    rows="5"
-    placeholder="Example:
-Hiwot Demissie
-Abebe Bekele
-Marta Tesfaye"
-    required
-  ></textarea>
+            <!-- ================= BUTTONS ================= -->
+            <div class="text-center d-flex justify-content-center gap-3">
 
-</div>
+              <button type="submit"
+                class="btn px-5 py-2"
+                style="background-color:#c2185b;color:white;border-radius:30px;font-weight:bold;">
+                💕 Create Wedding
+              </button>
 
-            <!-- Submit Button -->
-<div class="text-center d-flex justify-content-center gap-3">
+              <a href="{% url 'edit_wedding' %}"
+                class="btn px-5 py-2"
+                style="background-color:#c2185b;color:white;border-radius:30px;font-weight:bold;">
+                💾 Update Wedding
+              </a>
 
-  
-  
-    <!-- Create Button -->
-    <button
-      type="submit"
-      class="btn px-5 py-2"
-      style="
-        background-color: #c2185b;
-        color: white;
-        border-radius: 30px;
-        font-weight: bold;
-      "
-    >
-      💕 Create Wedding
-    </button>
-    <!-- Update Button -->
-    <a
-      href={% url 'edit_wedding'%}
-      class="btn px-5 py-2"
-      style="
-        background-color: #c2185b;
-        color: white;
-        border-radius: 30px;
-        font-weight: bold;
-      "
-    >
-      💾 Update Wedding
-    </a>
+              <a href="/"
+                class="btn px-5 py-2"
+                style="background-color:#6c757d;color:white;border-radius:30px;font-weight:bold;">
+                ✏ Delete
+              </a>
 
-        <!-- Delete Button -->
-    <a
-      href="/"
-      class="btn px-5 py-2"
-      style="
-        background-color: #6c757d;
-        color: white;
-        border-radius: 30px;
-        font-weight: bold;
-      "
-    >
-      ✏ Deelet
-    </a>
+            </div>
 
-  
-
-</div>
-            
           </form>
+
         </div>
       </div>
     </div>
