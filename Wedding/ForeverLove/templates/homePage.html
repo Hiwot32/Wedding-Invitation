@@ -16,7 +16,7 @@
         }
      
         .lists{
-            gap:70px;
+            gap:50px;
         }
         a{
             color:white;
@@ -79,12 +79,14 @@
                     <a href={% url 'story' %}>Story</a>
                     <a href={% url 'gallery' %}>Gallery</a>
                     <a href={% url 'Info' %}>Weeding<br /> <span class="orange">Information</span></a>
-                    <a href={% url 'rsvp' weddings.id %}>RSVP</a>
+                    {% if weddings.id %}
+                    <a href="{% url 'rsvp' weddings.id %}">RSVP</a>
+                    {% else %}
+                    <span>RSVP not available yet</span>
+                    {% endif %}
 
                     {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link p-0 m-0">Logout</button>
+                    <a href="{% url 'logout' %}">Logout</a>
                     </form>
                     {% else %}
                     <a href="{% url 'login' %}">Login</a>
@@ -106,12 +108,20 @@
 <section>
     <div class="d-flex gap-5 w-75 mx-auto pt-3">
         <div class="text-center">
+            {% if img_obj %}
             <img src="{{ img_obj.herImage.url }}" alt="Her Image" style="width: 460px;"/>
+            {% else %}
+            <img src="https://www.madebydesignesia.com/themes/lovus/images/misc/1.jpg" alt="Her Image" style="width: 460px;"/>
+            {% endif %}
             <p class="py-3 fw-bold">{{weddings.bride_name}}</p>
             <p class="w-75 mx-auto">Passionate soul with a heart full of love. She enjoys creating beautiful moments, cherishing family and friends, and spreading joy wherever she goes.</p>
     </div>
     <div class="text-center">
-        <img src="{{ img_obj.hisImage.url }} " alt="Her Image" style="width: 460px;"/>
+        {% if img_obj %}
+        <img src="{{ img_obj.hisImage.url }} " alt="His Image" style="width: 460px;"/>
+        {% else %}
+        <img src="https://www.madebydesignesia.com/themes/lovus/images/misc/2.jpg" alt="His Image" style="width: 460px;" />
+        {% endif %}
         <p class="py-3 fw-bold">{{weddings.groom_name}} </p>
         <p class="w-75 mx-auto">A kind-hearted and joyful person who loves life, cherishes family and friends, and believes in making every moment meaningful and memorable.
 
@@ -135,7 +145,7 @@
         <hr class="flex-grow-1 ">
     </div>
 
-<p class="text-black fs-1 fst-italic">{{ weddings.wedding_date }}</p>
+        <p class="text-black fs-1 fst-italic">{{ weddings.wedding_date }}</p>
             
         </div>
         <div class="py-5">
@@ -160,7 +170,7 @@
                 <img src="https://www.madebydesignesia.com/themes/lovus/images/misc/4.jpg" style="width:550px" class="rounded-3"/></div>
             </div>
         </div>
-<div>
+    <div>
 </section>
 
 <section class="mb-5">

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 
@@ -10,52 +10,114 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()  # save new user
-            login(request, user)  # log the user in immediately
-            return redirect('home')  # redirect to couples info or home
+            user = form.save()  
+            login(request, user)  
+            return redirect('home') 
     else:
         form = UserCreationForm()
     return render(request, 'registration.html', {'form': form})
 
+
+
+def user_login(request):
+    if request.method=="POST":
+        username=request.POST.get("username")
+        password=request.POST.get("password")
+
+        user=authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'login.html', {"error":"Invalid Credentials"})
+        
+    return render(request, 'login.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
+
 def home_page(request):
     weddings=Wedding.objects.last()
     img_obj=Image.objects.filter(wedding=weddings).last()
+
     if not weddings:
         weddings={
+            "bride_name":"Sara",
             "groom_name":"Abrham",
-            "bride_name":"Sara"
+            "location":"Mexico, Naer Debrework Building",
+            "wedding_date":"May 12, 2026",
+            
         }
-    if not img_obj:
-        img_obj={
-            "herImg":"https://www.madebydesignesia.com/themes/lovus/images/misc/1.jpg",
-            "hisImg":"https://www.madebydesignesia.com/themes/lovus/images/misc/2.jpg"
-        }
+ 
     context={
         "weddings":weddings,
         "img_obj":img_obj
     }
     return render(request, 'homePage.html', context)
 
+
 def about_page(request):
-    weddings = Wedding.objects.last() 
-    img = Image.objects.filter(wedding=weddings).last()
+    weddings=Wedding.objects.last()
+    img=Image.objects.filter(wedding=weddings).last()
     if not weddings:
         weddings={
-            "groom_name":"Abrham",
             "bride_name":"Sara",
-
+            "groom_name":"Abrham",
+            "herStory":"She grew up surrounded by love, kindness, and strong family values. With a warm heart and a bright smile, she has always brought joy to those around her. She believes in faith, hard work, and the beauty of simple moments. Today, she begins a new chapter as a bride — ready to build a life filled with love, laughter, and lasting memories.",
+            "hisStory":"He was raised with strong values, a caring heart, and a determined spirit. Known for his kindness and quiet strength, he has always worked hard to build a meaningful life. He finds joy in family, friendship, and the simple blessings each day brings.Today, he steps into a new chapter as a groom — ready to lead with love, stand with loyalty, and build a future filled with happiness and lasting memories."          
         }
-    return render(request, 'aboutPage.html', {'weddings':weddings, 'img':img})
+    
+    context={
+        "weddings":weddings,
+        "img":img
+    }
+    return render(request, 'aboutPage.html', context)
+
 
 def story_page(request):
-    weddings = Wedding.objects.last() 
-    img = Image.objects.filter(wedding=weddings).last()
-    return render(request, 'story.html', {'weddings':weddings, 'img':img})
+    weddings=Wedding.objects.last()
+    img=Image.objects.filter(wedding=weddings).last()
 
-def galler_page(request):
-    weddings = Wedding.objects.last() 
-    img = Image.objects.filter(wedding=weddings).first()    
-    return render(request, 'gallery.html', {'weddings':weddings, 'img':img})
+    if not weddings:
+        weddings={
+            "bride_name":"Sara",
+            "groom_name":"Abrham",
+            "how_we_met":"Their story began with a simple introduction that turned into hours of easy conversation. What started as friendship slowly grew into something deeper, built on laughter, understanding, and shared dreams.From that first meeting, their hearts knew they had found something special — a love meant to last a lifetime.",
+            "dateOfMeet":"April 1, 2024",
+            "first_date":"Their first date was simple but unforgettable. Nervous smiles quickly turned into comfortable laughter as they talked for hours, losing track of time. In that quiet moment, they both felt something special — the beginning of a beautiful love story.",
+            "dateOfDate":"Augest 2, 2024",
+            "proposal":"On a beautiful and unforgettable day, he planned a moment filled with love and meaning. With a nervous smile and a hopeful heart, he asked her to spend forever with him.Through happy tears and a joyful “yes,” their journey toward a lifetime together officially began.",
+            "dateOfProposal":"Jun 24, 2025",
+            "engagement":"Their engagement was a joyful celebration of love, family, and new beginnings. Surrounded by the people who mean the most to them, they promised to walk hand in hand through every season of life.It was the start of a beautiful chapter — filled with excitement, hope, and dreams of forever.",
+            "dateOfEngagement":"April 2, 2026",
+            "marriage":"On their special day, surrounded by love and blessings, they promised to stand by each other through every joy and challenge. With grateful hearts and hopeful dreams, they began their life as one.Their marriage marks the beginning of a forever built on love, trust, and unwavering commitment."
+        }
+
+    context={
+        "weddings":weddings,
+        "img":img
+    }
+    return render(request, 'story.html', context)
+
+
+
+def gallery_page(request):
+    weddings=Wedding.objects.last()
+    img=Image.objects.filter(wedding=weddings).last()
+    if not weddings:
+        weddings={
+            "bride_name":"Sara",
+            "groom_name":"Abrham",
+        } 
+    context={
+        "weddings":weddings,
+        "img":img
+    }
+    return render(request, 'gallery.html', context)
+
+
 
 @login_required
 def couples_info(request):
@@ -100,11 +162,11 @@ def couples_info(request):
             wedding=wedding,
             herImage=request.FILES.get("herImage"),
             hisImage=request.FILES.get("hisImage"),
-            meet=request.FILES.get("meet"),
-            engagement=request.FILES.get("engagement"),
-            first_date=request.FILES.get("first_date"),
-            proposal=request.FILES.get("proposal"),
-            marriage=request.FILES.get("marriage"),
+            meetImg=request.FILES.get("meet"),
+            engagementImg=request.FILES.get("engagement"),
+            first_dateImg=request.FILES.get("first_date"),
+            proposalImg=request.FILES.get("proposal"),
+            marriageImg=request.FILES.get("marriage"),
             gallery1=request.FILES.get("gallery1"),
             gallery2=request.FILES.get("gallery2"),
             gallery3=request.FILES.get("gallery3"),
@@ -132,36 +194,34 @@ def couples_info(request):
 
     return render(request, 'couplesInfo.html')
 
+
+
 def rsvp_page(request, wedding_id):
-    wedding = Wedding.objects.get(id=wedding_id)
-    guests = Guest.objects.filter(wedding=wedding)
+    wedding=Wedding.objects.get(id=wedding_id)
+    guests=Guest.objects.filter(wedding=wedding)
 
-    if request.method == "POST":
-        guest_id = request.POST.get("guest_id")
-        number = request.POST.get("num_guests")
-        attendance = request.POST.get("attendance")
-        comments=request.POST.get("comments")
+    if request.method=="POST":
+        guest_id=request.POST.get('guest_id')
+        number=request.POST.get('number')
+        attendance=request.POST.get('attending')
+        comments=request.POST.get('comments')
 
-        guest = Guest.objects.get(id=guest_id)
-        attending_bool = True if attendance == 'yes' else False
+        guest=Guest.objects.get(id=guest_id)
+        attending=True if attendance == "yes" else False
 
-        number = int(number)
-  
+
+        number=int(number) if number else 1
 
         RSVP.objects.create(
-            wedding=wedding, 
+            wedding=wedding,
             guest=guest,
+            attending=attending,
             number_of_guests=number,
-            attending=attending_bool,
-            comments=comments
+            comment=comments
         )
+    return render(request, 'RSVP.html', {'wedding':wedding, 'guests':guests})
 
-        return redirect('home')
 
-    return render(request, "rsvp.html", {
-        "wedding": wedding,
-        "guests": guests
-    })
 
 def edit_wedding(request):
     wedding = Wedding.objects.last()
@@ -191,6 +251,23 @@ def edit_wedding(request):
         'wedding': wedding
     }
 
-    return redirect('home')
+    # return redirect('home')
 
     return render(request, 'update.html', context)
+
+
+def rsvp_summary(request):
+    wedding = Wedding.objects.last()
+    rsvps = RSVP.objects.filter(wedding=wedding)
+    
+    context = {
+        'wedding': wedding,
+        'rsvps': rsvps
+    }
+    
+    return render(request, 'rsvp_summary.html', context)
+
+def delete_info(request):
+    wedding=Wedding.objects.last()
+    wedding.delete()
+    return render(request, 'deletePage.html')

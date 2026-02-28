@@ -29,13 +29,13 @@
             color:rgb(209,164,122);
         }
         .outerSection{
-            background-image:url("https://www.madebydesignesia.com/themes/lovus/images/background/1.jpg");
+             background-image: url('{{ img.herImage.url }}');
             background-size:cover;
 
         }
         .her{
-
-            padding:150px;
+          
+            padding:100px;
         }
         .orange{
             color:rgb(209,164,122);
@@ -46,7 +46,7 @@
 
         }
         .him{
-            background-image:url("https://www.madebydesignesia.com/themes/lovus/images/background/1.jpg");
+            background-image: url('{{ img.hisImage.url }}');
             background-size:cover;
             padding:200px;
         }
@@ -82,7 +82,7 @@
        
     </header>
         <div class="her text-center">
-            <p class="fs-2 text-white">{{weddings}} <br /><span class="orange happy fst-italic">Happy Bride</span></p>
+            <p class="fs-2 text-white">{{weddings.bride_name}} <br /><span class="orange happy fst-italic">Happy Bride</span></p>
         </div>
         </section>
         <div class="py-5">

@@ -93,7 +93,11 @@
             <div >
                 <div class="divs">
                     <div class="">
-                        <img src="{{img.meet.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% if img %}
+                        <img src="{{img.meetImg.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% else %}
+                        <img src="https://www.madebydesignesia.com/themes/lovus/images/story/1.jpg" style="width:500px" class="rounded-3 pb-4"/>
+                        {% endif %}
                     </div>
                     <div class="">
                         <p class="">{{weddings.dateOfMeet}}</p>
@@ -103,7 +107,11 @@
                 </div>
                 <div class="divs">
                     <div class="">
-                        <img src="{{img.proposal.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% if img %}
+                        <img src="{{img.proposalImg.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% else %}
+                        <img src="https://www.madebydesignesia.com/themes/lovus/images/story/3.jpg" style="width:500px" class="rounded-3 pb-4"/>
+                        {% endif %}
                     </div>
                     <div class="">
                         <p class="">{{weddings.dateOfProposal}}</p>
@@ -111,22 +119,17 @@
                         <p class="w-75">{{weddings.proposal}}</p>
                     </div>
                 </div>
-                <div class="divs">
-                    <div class="">
-                        <img src="{{img.marriage.url}}" style="width:500px" class="rounded-3 pb-4"/>
-                    </div>
-                    <div class="">
-                        <p class="">{{weddings.wedding_date}}</p>
-                        <h4 class="pb-3">Getting Married</h4>
-                        <p class="w-75">{{weddings.marriage}}</p>
-                    </div>
-                </div>
+               
             </div>
 
             <div>
                 <div class="div2">
                     <div class="">
-                        <img src="{{img.first_date.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% if img %}
+                        <img src="{{img.first_dateImg.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% else %}
+                        <img src="https://www.madebydesignesia.com/themes/lovus/images/story/2.jpg" style="width:500px" class="rounded-3 pb-4"/>
+                        {% endif %}
                     </div>
                     <div class="">
                         <p class="">{{weddings.dateOfDate}}</p>
@@ -135,15 +138,22 @@
                     </div>
                 </div>
                 <div class="div2">
+                    <div class="divs">
                     <div class="">
-                        {% comment %} <img src="{{img.engagement.url}}" style="width:500px" class="rounded-3 pb-4"/> {% endcomment %}
+                        {% if img %}
+                        <img src="{{img.marriageImg.url}}" style="width:500px" class="rounded-3 pb-4"/>
+                        {% else %}
+                        <img src="https://www.madebydesignesia.com/themes/lovus/images/story/5.jpg" style="width:500px" class="rounded-3 pb-4"/>
+                        {% endif %}
+
                     </div>
                     <div class="">
-                        <p class="">{{weddings.dateOfEngagement}}
-                        </p>
-                        <h4 class="pb-3">We Are Engaged</h4>
-                        <p class="w-75">{{weddings.engagement}}</p>
+                        <p class="">{{weddings.wedding_date}}</p>
+                        <h4 class="pb-3">Getting Married</h4>
+                        <p class="w-75">{{weddings.marriage}}</p>
                     </div>
+                </div>
+                  
                 </div>
             </div>
         </div>

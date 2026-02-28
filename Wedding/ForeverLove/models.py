@@ -5,7 +5,6 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
-# Wedding main info
 class Wedding(models.Model): 
     bride_name = models.CharField(max_length=100, null=True, blank=True)
     groom_name = models.CharField(max_length=100, null=True, blank=True)
@@ -29,17 +28,15 @@ class Wedding(models.Model):
         return self.bride_name
     
 
-
-# Wedding Images (cover, about, gallery)
 class Image(models.Model):
     wedding = models.OneToOneField(Wedding, on_delete=models.CASCADE)
     herImage = models.ImageField(upload_to='images/', null=True, blank=True)
     hisImage = models.ImageField(upload_to='images/', null=True, blank=True)
-    meet=models.ImageField(upload_to='images/', null=True, blank=True)
-    engagement=models.ImageField(upload_to='images/', null=True, blank=True)
-    first_date=models.ImageField(upload_to='images/', null=True, blank=True)
-    proposal=models.ImageField(upload_to='images/', null=True, blank=True)
-    marriage=models.ImageField(upload_to='images/', null=True, blank=True)
+    meetImg=models.ImageField(upload_to='images/', null=True, blank=True)
+    engagementImg = models.ImageField(upload_to='images/', null=True, blank=True)
+    first_dateImg=models.ImageField(upload_to='images/', null=True, blank=True)
+    proposalImg=models.ImageField(upload_to='images/', null=True, blank=True)
+    marriageImg=models.ImageField(upload_to='images/', null=True, blank=True)
     gallery1 = models.ImageField(upload_to='images/', null=True, blank=True)
     gallery2 = models.ImageField(upload_to='images/', null=True, blank=True)
     gallery3 = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -51,7 +48,6 @@ class Image(models.Model):
         return f"Images for {self.wedding.bride_name}"
 
 
-# Guest names
 class Guest(models.Model):
     wedding = models.ForeignKey(Wedding, on_delete=models.CASCADE)
     guest_name = models.CharField(max_length=100, null=True)
@@ -59,8 +55,6 @@ class Guest(models.Model):
     def __str__(self):
         return self.guest_name
 
-
-# RSVP responses + comments
 class RSVP(models.Model):
     wedding = models.ForeignKey(Wedding, on_delete=models.CASCADE)
     guest = models.ForeignKey(Guest, on_delete=models.CASCADE)

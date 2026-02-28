@@ -18,22 +18,21 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import LogoutView
 from ForeverLove.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html', next_page='home' ), name='login'),
-    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
     path('register/', register, name='register'),
     path('', home_page, name='home'),
     path('about/', about_page, name='about'),
     path('story/', story_page, name='story'),
-    path('gallery/', galler_page, name='gallery'),
+    path('gallery/', gallery_page, name='gallery'),
     path('couplesInfo/', couples_info, name='Info'), 
     path('rsvp/<int:wedding_id>/', rsvp_page, name='rsvp'),
     path('edit/', edit_wedding, name='edit_wedding'),
+    path('rsvp-summary/', rsvp_summary, name='rsvp_summary')
 ]
 
 
